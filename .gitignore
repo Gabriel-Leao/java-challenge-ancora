@@ -1,0 +1,57 @@
+# Ignore Maven build files
+target/
+*.log
+*.log.*
+
+# Ignore Eclipse project files
+.project
+.classpath
+.settings/
+
+# Ignore IntelliJ IDEA project files
+.idea/
+*.iml
+
+# Ignore NetBeans project files
+nbproject/
+
+# Ignore build output directories
+build/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE configuration files
+.vscode/
+
+# Ignore .env files (for local configuration variables, like database credentials)
+.env
+
+# Ignore Maven wrapper files
+mvnw
+mvnw.cmd
+
+# Ignore Maven wrapper directories
+.mvn/
+
+# Ignore temporary files
+*.tmp
+*.swp
+
+# Ignore dependencies or other environment-specific files
+*.db
+*.tar.gz
+*.zip
+
+# Ignore Java class files and compiled classes
+*.class
+
+# Ignore JAR/WAR files
+*.jar
+*.war
+
+# Ignore logs and reports
+logs/
+*.log
+*.out
