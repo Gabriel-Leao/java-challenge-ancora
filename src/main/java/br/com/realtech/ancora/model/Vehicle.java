@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Vehicle {
-
     @JsonProperty("montadora")
     private String manufacturer;
 

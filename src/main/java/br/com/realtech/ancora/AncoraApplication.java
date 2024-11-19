@@ -1,6 +1,6 @@
 package br.com.realtech.ancora;
 
-import br.com.realtech.ancora.model.SearchFilters;
+import br.com.realtech.ancora.dto.SearchFilters;
 import br.com.realtech.ancora.service.SearchService;
 import br.com.realtech.ancora.util.CartUtil;
 import br.com.realtech.ancora.util.SearchMenu;
@@ -31,7 +31,7 @@ public class AncoraApplication implements ApplicationRunner {
 		SearchMenu searchMenu = new SearchMenu();
 		SearchFilters filters = searchMenu.displayMenu();
 
-		searchService.setFilters(filters.getLicensePlate(), filters.getManufacturer(), filters.getProduct());
+		searchService.setFilters(filters.licensePlate(), filters.manufacturer(), filters.product());
 
 		CartUtil.displayProductsAndAddToCart(searchService.search());
 

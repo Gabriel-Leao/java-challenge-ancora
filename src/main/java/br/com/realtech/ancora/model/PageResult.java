@@ -6,10 +6,7 @@ public class PageResult {
     private Vehicle vehicle;
     private List<Product> data;
 
-    public Vehicle getVehicle() { return vehicle; }
-    public void setVehicle(Vehicle vehicle) { this.vehicle = vehicle; }
     public List<Product> getData() { return data; }
-    public void setData(List<Product> data) { this.data = data; }
 
     @Override
     public String toString() {

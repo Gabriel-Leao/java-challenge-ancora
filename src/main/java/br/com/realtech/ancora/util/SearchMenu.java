@@ -1,6 +1,6 @@
 package br.com.realtech.ancora.util;
 
-import br.com.realtech.ancora.model.SearchFilters;
+import br.com.realtech.ancora.dto.SearchFilters;
 
 import java.util.Scanner;
 
