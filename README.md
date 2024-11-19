@@ -11,13 +11,24 @@ Ancora é um projeto desenvolvido em Java utilizando o framework Spring Boot. El
 ## Estrutura do Projeto
 - `src/main/java`: Contém o código-fonte da aplicação.
 - `src/main/resources`: Contém os arquivos de configuração e recursos estáticos.
-- `src/test/java`: Contém os testes unitários e de integração.
 
 ## Configuração
-As configurações principais do projeto estão no arquivo `application.properties`:
+Para executar o projeto corretamente, é necessário configurar variáveis de ambiente. O projeto inclui um arquivo `.env.example` com as variáveis de ambiente necessárias para a execução. Certifique-se de criar um arquivo `.env` na raiz do projeto, baseado no modelo fornecido e preenchê-lo com os valores apropriados.
+
+### Variáveis de Ambiente Necessárias
+- **CLIENT_ID**: ID do cliente fornecido pelo serviço de autenticação.
+- **CLIENT_SECRET**: Segredo do cliente fornecido pelo serviço de autenticação.
+- **GRANT_TYPE**: Tipo de grant usado para autenticação, geralmente `client_credentials`.
+- **SEARCH_URL**: URL do endpoint da API de busca.
+- **AUTH_URL**: URL do endpoint do serviço de autenticação.
+
+Exemplo no arquivo `.env.example`:
 ```ini
-spring.application.name=ancora
-logging.level.root=ERROR
+CLIENT_ID=id
+CLIENT_SECRET=secret
+GRANT_TYPE=client_credentials
+SEARCH_URL=https://api.example.com/search
+AUTH_URL=https://auth.example.com/token
 ```
 ## Como Executar
 
@@ -43,7 +54,7 @@ Certifique-se de ter o Java e o Maven instalados em sua máquina.
 Para mais informações, consulte a documentação oficial:
 
 - [Documentação do Apache Maven](https://maven.apache.org/)
-- [Guia de Referência do Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/html/)
+- [Guia de Referência do Spring Boot](https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/html/)
 
 ## Contribuição
 
