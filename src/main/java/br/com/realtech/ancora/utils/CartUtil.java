@@ -1,8 +1,8 @@
-package br.com.realtech.ancora.util;
+package br.com.realtech.ancora.utils;
 
-import br.com.realtech.ancora.model.Cart;
-import br.com.realtech.ancora.model.PageResult;
-import br.com.realtech.ancora.model.Product;
+import br.com.realtech.ancora.models.Cart;
+import br.com.realtech.ancora.models.PageResult;
+import br.com.realtech.ancora.models.Product;
 
 import java.util.List;
 import java.util.Scanner;

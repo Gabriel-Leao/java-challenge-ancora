@@ -1,7 +1,7 @@
-package br.com.realtech.ancora.service;
+package br.com.realtech.ancora.services;
 
-import br.com.realtech.ancora.model.PageResult;
-import br.com.realtech.ancora.repository.SearchRepository;
+import br.com.realtech.ancora.models.PageResult;
+import br.com.realtech.ancora.repositories.SearchRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

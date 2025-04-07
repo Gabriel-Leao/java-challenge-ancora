@@ -1,4 +1,4 @@
-package br.com.realtech.ancora.model;
+package br.com.realtech.ancora.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

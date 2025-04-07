@@ -1,6 +1,6 @@
-package br.com.realtech.ancora.repository;
+package br.com.realtech.ancora.repositories;
 
-import br.com.realtech.ancora.util.EnvUtil;
+import br.com.realtech.ancora.utils.EnvUtil;
 import org.springframework.stereotype.Repository;
 import java.net.URI;
 import java.net.http.HttpClient;

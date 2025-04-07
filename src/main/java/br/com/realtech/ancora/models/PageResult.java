@@ -1,4 +1,4 @@
-package br.com.realtech.ancora.model;
+package br.com.realtech.ancora.models;
 import java.util.List;
 import java.util.stream.Collectors;
 

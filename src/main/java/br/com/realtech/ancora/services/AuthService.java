@@ -1,7 +1,7 @@
-package br.com.realtech.ancora.service;
+package br.com.realtech.ancora.services;
 
-import br.com.realtech.ancora.repository.AuthRepository;
-import br.com.realtech.ancora.util.EnvUtil;
+import br.com.realtech.ancora.repositories.AuthRepository;
+import br.com.realtech.ancora.utils.EnvUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

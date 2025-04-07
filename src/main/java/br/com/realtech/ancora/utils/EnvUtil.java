@@ -1,4 +1,4 @@
-package br.com.realtech.ancora.util;
+package br.com.realtech.ancora.utils;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
