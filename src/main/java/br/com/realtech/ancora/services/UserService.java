@@ -1,11 +1,14 @@
 package br.com.realtech.ancora.services;
 
+import br.com.realtech.ancora.dtos.user.UpdateUserDto;
 import br.com.realtech.ancora.dtos.user.UserRequestDto;
 import br.com.realtech.ancora.dtos.user.UserResponseDto;
 import br.com.realtech.ancora.entities.User;
 import br.com.realtech.ancora.exceptions.ConflictException;
 import br.com.realtech.ancora.exceptions.NotFoundException;
+import br.com.realtech.ancora.exceptions.UnauthorizedException;
 import br.com.realtech.ancora.repositories.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +17,11 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserResponseDto> getUsers() {
@@ -55,8 +60,13 @@ public class UserService {
         return new UserResponseDto(updatedUser);
     }
 
-    public void deleteUser(Long id) {
-        userRepository.findUserById(id);
+    public void deleteUser(Long id, UpdateUserDto user) {
+        User existingUser = userRepository.findUserById(id);
+
+        if (!passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
+            throw new UnauthorizedException("Wrong password");
+        }
+
         userRepository.deleteUser(id);
     }
 }

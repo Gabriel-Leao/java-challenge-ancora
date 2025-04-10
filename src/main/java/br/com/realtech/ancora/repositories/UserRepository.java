@@ -1,7 +1,6 @@
 package br.com.realtech.ancora.repositories;
 
 import br.com.realtech.ancora.dtos.user.UserRequestDto;
-import br.com.realtech.ancora.dtos.user.UserResponseDto;
 import br.com.realtech.ancora.entities.User;
 import br.com.realtech.ancora.exceptions.DatabaseException;
 import br.com.realtech.ancora.factories.ConnectionFactory;
@@ -32,8 +31,9 @@ public class UserRepository {
             Long id = rs.getLong("id");
             String name = rs.getString("name");
             String email = rs.getString("email");
+            String password = rs.getString("password");
 
-            return new User(id, name, email);
+            return new User(id, name, email, password);
         } catch (SQLException e) {
             throw new DatabaseException("Error mapping result set to user", e);
         }
@@ -59,7 +59,7 @@ public class UserRepository {
     }
 
     public User findUserById(Long id) {
-        String query = "SELECT id, name, email FROM users WHERE id = ?";
+        String query = "SELECT id, name, email, password FROM users WHERE id = ?";
 
         try (
                 Connection connection = connectionFactory.getConnection();

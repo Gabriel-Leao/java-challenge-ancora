@@ -10,7 +10,6 @@ import java.sql.Statement;
 
 @Configuration
 public class DatabaseInitializer {
-
     @Bean
     public ApplicationRunner initDatabase(DataSource dataSource) {
         return args -> {
