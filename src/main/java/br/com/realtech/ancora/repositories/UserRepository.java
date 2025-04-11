@@ -7,10 +7,7 @@ import br.com.realtech.ancora.factories.ConnectionFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +37,7 @@ public class UserRepository {
     }
 
     public List<User> getUsers() {
-        String query = "SELECT id, name, email FROM users";
+        String query = "SELECT id, name, email, password FROM users";
 
         try (
                 Connection connection = connectionFactory.getConnection();
@@ -130,7 +127,7 @@ public class UserRepository {
     }
 
     public User updateUser(Long id, UserRequestDto userDto) {
-        String query = "UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?";
+        String query = "UPDATE users SET name = ?, email = ?, password = ?, updated_at = ? WHERE id = ?";
 
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
@@ -141,7 +138,8 @@ public class UserRepository {
             statement.setString(1, userDto.getName());
             statement.setString(2, userDto.getEmail());
             statement.setString(3, userDto.getPassword());
-            statement.setLong(4, id);
+            statement.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
+            statement.setLong(5, id);
 
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected == 0) {
