@@ -63,6 +63,10 @@ public class UserService {
     public void deleteUser(Long id, DeleteUserDto user) {
         User existingUser = userRepository.findUserById(id);
 
+        if (existingUser == null) {
+            throw new NotFoundException("User not found with ID: " + id);
+        }
+
         if (!passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
             throw new UnauthorizedException("Wrong password");
         }

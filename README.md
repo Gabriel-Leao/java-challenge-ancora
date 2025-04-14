@@ -26,21 +26,7 @@ Ancora é um projeto de backend desenvolvido em Java com o framework Spring Boot
 - `configs/`: Configurações de segurança, banco e utilitários.
 - `exceptions/`: Exceções customizadas e tratador global.
 - `factories/`: Criação de conexão com o banco.
-- `utils/`: Funções auxiliares (ex: carregamento de variáveis ambiente).
 - `tests/`: Contém os testes unitários.
-
-## Configuração
-
-É necessário criar um arquivo `.env` na raiz do projeto com as configurações de acesso ao banco. Um arquivo `.env.example` está disponível como referência.
-
-### Variáveis de Ambiente Necessárias
-
-```ini
-DB_HOST=localhost:5432
-DB_NAME=ancora
-DB_USER=usuario
-DB_PASSWORD=senha
-```
 
 ## Inicialização do Banco de Dados
 
@@ -50,12 +36,13 @@ A tabela `users` será criada automaticamente na inicialização da aplicação,
 
 ```sql
 CREATE TABLE IF NOT EXISTS users (
-    id         SERIAL       PRIMARY KEY,
-    name       VARCHAR(100) NOT NULL,
-    email      VARCHAR(100) NOT NULL,
-    password   VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
+   id         INT            AUTO_INCREMENT PRIMARY KEY,
+   name       VARCHAR(100)   NOT NULL,
+   email      VARCHAR(100)   NOT NULL,
+   password   VARCHAR(100)   NOT NULL,
+   created_at TIMESTAMP      NOT NULL       DEFAULT CURRENT_TIMESTAMP,
+   updated_at TIMESTAMP      NOT NULL       DEFAULT CURRENT_TIMESTAMP,
+   CONSTRAINT unique_user_email UNIQUE (email)
 );
 ```
 
@@ -183,9 +170,7 @@ CREATE TABLE IF NOT EXISTS users (
   cd java-challenge-ancora
 ```
 
-3. Crie um arquivo `.env` com base no `.env.example` e insira suas configurações.
-
-4. Execute a aplicação com o Maven:
+3. Execute a aplicação com o Maven:
 ```bash
   mvn spring-boot:run
 ```

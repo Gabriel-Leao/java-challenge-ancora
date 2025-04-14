@@ -80,15 +80,13 @@ public class UserRepository {
 
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        User user = new User(userDto);
-
         try (
                 Connection connection = connectionFactory.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, user.getPassword());
+            statement.setString(1, userDto.getName());
+            statement.setString(2, userDto.getEmail());
+            statement.setString(3, userDto.getPassword());
 
             statement.executeUpdate();
 
@@ -96,24 +94,23 @@ public class UserRepository {
                 if (!generatedKeys.next()) {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
-                user.setId(generatedKeys.getLong(1));
+                return new User(generatedKeys.getLong(1), userDto);
             }
         }
         catch (SQLException e) {
             throw new DatabaseException("Error creating user", e);
         }
-
-        return user;
     }
 
     public Optional<User> findUserByEmail(String email) {
-        String query = "SELECT id, name, email FROM users WHERE email = ?";
+        String query = "SELECT id, name, email, password FROM users WHERE email = ?";
 
         try (
                 Connection connection = connectionFactory.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)
         ) {
             statement.setString(1, email);
+
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
                     return Optional.of(mapResultSetToUser(rs));
