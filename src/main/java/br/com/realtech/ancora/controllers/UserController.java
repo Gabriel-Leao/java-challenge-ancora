@@ -1,6 +1,6 @@
 package br.com.realtech.ancora.controllers;
 
-import br.com.realtech.ancora.dtos.user.UpdateUserDto;
+import br.com.realtech.ancora.dtos.user.DeleteUserDto;
 import br.com.realtech.ancora.dtos.user.UserRequestDto;
 import br.com.realtech.ancora.dtos.user.UserResponseDto;
 import br.com.realtech.ancora.services.UserService;
@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUSer(@PathVariable Long id, @Valid @RequestBody UpdateUserDto user) {
+    public ResponseEntity<Void> deleteUSer(@PathVariable Long id, @Valid @RequestBody DeleteUserDto user) {
         userService.deleteUser(id, user);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

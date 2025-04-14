@@ -1,6 +1,6 @@
 package br.com.realtech.ancora.services;
 
-import br.com.realtech.ancora.dtos.user.UpdateUserDto;
+import br.com.realtech.ancora.dtos.user.DeleteUserDto;
 import br.com.realtech.ancora.dtos.user.UserRequestDto;
 import br.com.realtech.ancora.dtos.user.UserResponseDto;
 import br.com.realtech.ancora.entities.User;
@@ -60,7 +60,7 @@ public class UserService {
         return new UserResponseDto(updatedUser);
     }
 
-    public void deleteUser(Long id, UpdateUserDto user) {
+    public void deleteUser(Long id, DeleteUserDto user) {
         User existingUser = userRepository.findUserById(id);
 
         if (!passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
