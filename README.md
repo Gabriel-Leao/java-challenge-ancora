@@ -6,7 +6,7 @@ Ancora é um projeto de backend desenvolvido em Java com o framework Spring Boot
 
 ## Tecnologias Utilizadas
 
-- **Java 17**: Linguagem principal do projeto.
+- **Java 21**: Linguagem principal do projeto.
 - **Spring Boot**: Framework para desenvolvimento de aplicações Java.
 - **Spring Security**: Para configuração de segurança e autenticação.
 - **PostgreSQL**: Banco de dados relacional utilizado.
