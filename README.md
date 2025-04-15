@@ -2,22 +2,21 @@
 
 ## Descrição
 
-Ancora é um projeto de backend desenvolvido em Java com o framework Spring Boot. Ele implementa autenticação, cadastro e listagem de usuários utilizando banco de dados PostgreSQL e segue boas práticas de arquitetura, segurança e organização de código.
+Ancora é um projeto de backend desenvolvido em Java com o framework Spring Boot. Ele implementa autenticação, cadastro e listagem de usuários utilizando banco de dados H2 em memória e segue boas práticas de arquitetura, segurança e organização de código.
 
 ## Tecnologias Utilizadas
 
 - **Java 21**: Linguagem principal do projeto.
 - **Spring Boot**: Framework para desenvolvimento de aplicações Java.
 - **Spring Security**: Para configuração de segurança e autenticação.
-- **PostgreSQL**: Banco de dados relacional utilizado.
+- **H2 Database**: Banco de dados em memória utilizado para desenvolvimento e testes.
+- **SpringDoc OpenAPI**: Documentação interativa da API (Swagger UI).
 - **Maven**: Gerenciador de dependências e build.
 - **HikariCP**: Gerenciador de conexões com o banco.
 - **Dotenv Java**: Para carregamento de variáveis de ambiente.
 - **Lombok**: Geração de código boilerplate.
 - **JPA (Jakarta Persistence API)**: Para mapeamento objeto-relacional (ORM). *Instalado, mas ainda não em uso.*
 - **Flyway**: Para migração de banco de dados. *Instalado, mas ainda não em uso.*
-- **JUnit 5**: Framework de testes unitários.
-- **Mockito**: Framework de mock para testes.
 
 ## Estrutura do Projeto
 
@@ -26,7 +25,24 @@ Ancora é um projeto de backend desenvolvido em Java com o framework Spring Boot
 - `configs/`: Configurações de segurança, banco e utilitários.
 - `exceptions/`: Exceções customizadas e tratador global.
 - `factories/`: Criação de conexão com o banco.
-- `tests/`: Contém os testes unitários.
+
+## Documentação da API com Swagger
+
+A documentação interativa da API está disponível através do SpringDoc OpenAPI (Swagger UI). Para acessar:
+
+1. Execute a aplicação
+2. Acesse: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+## Banco de Dados H2
+
+O projeto utiliza o banco de dados H2 em memória para facilitar os testes. Para acessar o console do H2:
+
+1. Execute a aplicação
+2. Acesse: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+3. Credenciais:
+  - JDBC URL: `jdbc:h2:mem:ancora_hub`
+  - User Name: `sa`
+  - Password: (deixe em branco)
 
 ## Inicialização do Banco de Dados
 
