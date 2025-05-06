@@ -24,53 +24,49 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public User getUserById(String id) {
+        return userRepository.findUserById(id)
+                .orElseThrow(() -> new NotFoundException("User not found with ID: " + id));
+    }
+
     public List<UserResponseDto> getUsers() {
-        List<User> users = userRepository.getUsers();
+        List<User> users = userRepository.findAll();
         return users.stream()
                 .map(UserResponseDto::new)
                 .toList();
-    }
-
-    public UserResponseDto getUserById(Long id) {
-        User user = userRepository.findUserById(id);
-        if (user == null) {
-            throw new NotFoundException("User not found with ID: " + id);
-        }
-
-        return new UserResponseDto(user);
     }
 
     public UserResponseDto createUser(UserRequestDto user) {
         if (userRepository.findUserByEmail(user.getEmail()).isPresent()) {
             throw new ConflictException("User with email already exists");
         }
-        User createdUser = userRepository.createUser(user);
-        return new UserResponseDto(createdUser);
+        User newUser = new User(user);
+        return new UserResponseDto(userRepository.save(newUser));
     }
 
-    public UserResponseDto updateUser(Long id, UserRequestDto user) {
-        userRepository.findUserById(id);
+    public UserResponseDto updateUser(String id, UserRequestDto user) {
+        User existingUser = getUserById(id);
         Optional<User> userWithEmail = userRepository.findUserByEmail(user.getEmail());
-
         if (userWithEmail.isPresent() && !userWithEmail.get().getId().equals(id)) {
             throw new ConflictException("User with email already exists");
         }
 
-        User updatedUser = userRepository.updateUser(id, user);
-        return new UserResponseDto(updatedUser);
+        existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        existingUser.setName(user.getName());
+        existingUser.setBirthDate(user.getBirthdate());
+        existingUser.setRole(user.getRole());
+        existingUser.setEmail(user.getEmail());
+
+        return new UserResponseDto(userRepository.save(existingUser));
     }
 
-    public void deleteUser(Long id, DeleteUserDto user) {
-        User existingUser = userRepository.findUserById(id);
-
-        if (existingUser == null) {
-            throw new NotFoundException("User not found with ID: " + id);
-        }
+    public void deleteUser(String id, DeleteUserDto user) {
+        User existingUser = getUserById(id);
 
         if (!passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
             throw new UnauthorizedException("Wrong password");
         }
 
-        userRepository.deleteUser(id);
+        userRepository.delete(existingUser);
     }
 }

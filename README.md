@@ -13,10 +13,9 @@ Ancora é um projeto de backend desenvolvido em Java com o framework Spring Boot
 - **SpringDoc OpenAPI**: Documentação interativa da API (Swagger UI).
 - **Maven**: Gerenciador de dependências e build.
 - **HikariCP**: Gerenciador de conexões com o banco.
-- **Dotenv Java**: Para carregamento de variáveis de ambiente.
 - **Lombok**: Geração de código boilerplate.
-- **JPA (Jakarta Persistence API)**: Para mapeamento objeto-relacional (ORM). *Instalado, mas ainda não em uso.*
-- **Flyway**: Para migração de banco de dados. *Instalado, mas ainda não em uso.*
+- **JPA (Jakarta Persistence API)**: Para mapeamento objeto-relacional (ORM).
+- **Flyway**: Para migração de banco de dados.
 
 ## Estrutura do Projeto
 
@@ -24,7 +23,7 @@ Ancora é um projeto de backend desenvolvido em Java com o framework Spring Boot
 - `dtos/`: Objetos de transferência de dados.
 - `configs/`: Configurações de segurança, banco e utilitários.
 - `exceptions/`: Exceções customizadas e tratador global.
-- `factories/`: Criação de conexão com o banco.
+- `validations/`: Validações personalizadas para os dtos
 
 ## Documentação da API com Swagger
 
