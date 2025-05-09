@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequestDto {
+public class CreateUserRequestDto {
     @NotNull(message = "Name is required")
     @NotBlank(message = "Name can't be empty")
     @Size(min = 3, max = 100, message = "Name must be between 3 and 100 characters")
@@ -23,7 +23,7 @@ public class UserRequestDto {
 
     @NotNull(message = "Email is required")
     @NotBlank(message = "Email can't be empty")
-    @Email(message = "Email should be valid")
+    @Email(message = "Email is not valid")
     @Size(min = 5, max = 100, message = "Email must be between 5 and 100 characters")
     private String email;
 

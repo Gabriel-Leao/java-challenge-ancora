@@ -1,6 +1,6 @@
 package br.com.realtech.ancora.entities;
 
-import br.com.realtech.ancora.dtos.user.UserRequestDto;
+import br.com.realtech.ancora.dtos.user.CreateUserRequestDto;
 import br.com.realtech.ancora.models.Role;
 import br.com.realtech.ancora.utils.DateFormatterUtil;
 import jakarta.persistence.*;
@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
@@ -18,7 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Setter
-    private String id;
+    private UUID id;
 
     @Column(nullable = false)
     @Setter
@@ -45,6 +46,14 @@ public class User {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    public User(CreateUserRequestDto createUserDto) {
+        this.name = createUserDto.getName();
+        this.email = createUserDto.getEmail();
+        this.password = createUserDto.getPassword();
+        setBirthDate(createUserDto.getBirthdate());
+        setRole(createUserDto.getRole());
+    }
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
@@ -54,21 +63,6 @@ public class User {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
-    }
-
-    public User(UserRequestDto createUserDto) {
-        this.name = createUserDto.getName();
-        this.email = createUserDto.getEmail();
-        this.password = createUserDto.getPassword();
-        setBirthDate(createUserDto.getBirthdate());
-        setRole(createUserDto.getRole());
-    }
-
-    public User(String id, UserRequestDto createUserDto) {
-        this.id = id;
-        this.name = createUserDto.getName();
-        this.email = createUserDto.getEmail();
-        this.password = createUserDto.getPassword();
     }
 
     public void setRole(String role) {

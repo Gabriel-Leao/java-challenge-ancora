@@ -1,6 +1,7 @@
 package br.com.realtech.ancora.dtos.user;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DeleteUserDto {
-    @NotBlank(message = "Password is required")
+    @NotNull(message = "Password is required")
+    @NotBlank(message = "Password can't be empty")
     @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")
     private String password;
 }
