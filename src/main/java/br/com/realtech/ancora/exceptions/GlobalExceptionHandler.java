@@ -84,4 +84,15 @@ public class GlobalExceptionHandler {
                         request.getDescription(false)
                 ));
     }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidCredentials(InvalidCredentialsException exception, WebRequest request) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(new ErrorResponse(
+                        HttpStatus.UNAUTHORIZED.value(),
+                        "Unauthorized",
+                        exception.getMessage(),
+                        request.getDescription(false)
+                ));
+    }
 }

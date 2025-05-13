@@ -1,9 +1,10 @@
 package br.com.realtech.ancora.services;
 
-import br.com.realtech.ancora.dtos.user.CreateUserRequestDto;
-import br.com.realtech.ancora.dtos.user.DeleteUserDto;
-import br.com.realtech.ancora.dtos.user.PartialUpdateUserRequest;
-import br.com.realtech.ancora.dtos.user.UserResponseDto;
+import br.com.realtech.ancora.dtos.user.request.DeleteUserRequest;
+import br.com.realtech.ancora.dtos.user.request.PartialUpdateUserRequest;
+import br.com.realtech.ancora.dtos.user.request.UpsertUserRequest;
+import br.com.realtech.ancora.dtos.user.response.CreateUserResponse;
+import br.com.realtech.ancora.dtos.user.response.UserResponse;
 import br.com.realtech.ancora.entities.User;
 import br.com.realtech.ancora.exceptions.ConflictException;
 import br.com.realtech.ancora.exceptions.NotFoundException;
@@ -21,10 +22,12 @@ import java.util.function.Consumer;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public User getUserById(UUID id) {
@@ -38,38 +41,43 @@ public class UserService {
         }
     }
 
-    public List<UserResponseDto> getUsers() {
+    public List<UserResponse> getUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
-                .map(UserResponseDto::new)
+                .map(UserResponse::new)
                 .toList();
     }
 
-    public UserResponseDto createUser(CreateUserRequestDto user) {
-        if (userRepository.findUserByEmail(user.getEmail()).isPresent()) {
+    public CreateUserResponse createUser(UpsertUserRequest createUserRequest) {
+        if (userRepository.findUserByEmail(createUserRequest.getEmail()).isPresent()) {
             throw new ConflictException("User with email already exists");
         }
-        User newUser = new User(user);
-        return new UserResponseDto(userRepository.save(newUser));
+
+        createUserRequest.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
+        User newUser = new User(createUserRequest);
+        User createdUser = userRepository.save(newUser);
+        String token = jwtService.generateToken(createdUser);
+
+        return new CreateUserResponse(createdUser, token);
     }
 
-    public UserResponseDto updateUser(UUID id, CreateUserRequestDto user) {
+    public UserResponse updateUser(UUID id, UpsertUserRequest updateUserRequest) {
         User existingUser = getUserById(id);
-        Optional<User> userWithEmail = userRepository.findUserByEmail(user.getEmail());
+        Optional<User> userWithEmail = userRepository.findUserByEmail(updateUserRequest.getEmail());
         if (userWithEmail.isPresent() && !userWithEmail.get().getId().equals(id)) {
             throw new ConflictException("User with email already exists");
         }
 
-        existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        existingUser.setName(user.getName());
-        existingUser.setBirthDate(user.getBirthdate());
-        existingUser.setRole(user.getRole());
-        existingUser.setEmail(user.getEmail());
+        existingUser.setPassword(passwordEncoder.encode(updateUserRequest.getPassword()));
+        existingUser.setName(updateUserRequest.getName());
+        existingUser.setBirthDate(updateUserRequest.getBirthdate());
+        existingUser.setRole(updateUserRequest.getRole());
+        existingUser.setEmail(updateUserRequest.getEmail());
 
-        return new UserResponseDto(userRepository.save(existingUser));
+        return new UserResponse(userRepository.save(existingUser));
     }
 
-    public UserResponseDto partialUpdateUser(UUID id, PartialUpdateUserRequest userData) {
+    public UserResponse partialUpdateUser(UUID id, PartialUpdateUserRequest userData) {
         User existingUser = getUserById(id);
 
         updateIfPresent(userData.getName(), existingUser::setName);
@@ -82,10 +90,10 @@ public class UserService {
         }
 
         userRepository.save(existingUser);
-        return new UserResponseDto(existingUser);
+        return new UserResponse(existingUser);
     }
 
-    public void deleteUser(UUID id, DeleteUserDto user) {
+    public void deleteUser(UUID id, DeleteUserRequest user) {
         User existingUser = getUserById(id);
 
         if (!passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {

@@ -1,9 +1,10 @@
 package br.com.realtech.ancora.controllers;
 
-import br.com.realtech.ancora.dtos.user.CreateUserRequestDto;
-import br.com.realtech.ancora.dtos.user.DeleteUserDto;
-import br.com.realtech.ancora.dtos.user.PartialUpdateUserRequest;
-import br.com.realtech.ancora.dtos.user.UserResponseDto;
+import br.com.realtech.ancora.dtos.user.request.DeleteUserRequest;
+import br.com.realtech.ancora.dtos.user.request.PartialUpdateUserRequest;
+import br.com.realtech.ancora.dtos.user.request.UpsertUserRequest;
+import br.com.realtech.ancora.dtos.user.response.CreateUserResponse;
+import br.com.realtech.ancora.dtos.user.response.UserResponse;
 import br.com.realtech.ancora.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -23,37 +24,37 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
-        List<UserResponseDto> users = userService.getUsers();
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+        List<UserResponse> users = userService.getUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> getUserById(@PathVariable UUID id) {
-        UserResponseDto user = new UserResponseDto(userService.getUserById(id));
+    public ResponseEntity<UserResponse> getUserById(@PathVariable UUID id) {
+        UserResponse user = new UserResponse(userService.getUserById(id));
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody CreateUserRequestDto user) {
-        UserResponseDto createdUser = userService.createUser(user);
+    public ResponseEntity<CreateUserResponse> createUser(@Valid @RequestBody UpsertUserRequest user) {
+        CreateUserResponse createdUser = userService.createUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDto> updateUser(@PathVariable UUID id, @Valid @RequestBody CreateUserRequestDto user) {
-        UserResponseDto updatedUser = userService.updateUser(id, user);
+    public ResponseEntity<UserResponse> updateUser(@PathVariable UUID id, @Valid @RequestBody UpsertUserRequest user) {
+        UserResponse updatedUser = userService.updateUser(id, user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserResponseDto> partialUpdateUser(@PathVariable UUID id, @Valid @RequestBody PartialUpdateUserRequest userRequest) {
-        UserResponseDto updatedUser = userService.partialUpdateUser(id, userRequest);
+    public ResponseEntity<UserResponse> partialUpdateUser(@PathVariable UUID id, @Valid @RequestBody PartialUpdateUserRequest userRequest) {
+        UserResponse updatedUser = userService.partialUpdateUser(id, userRequest);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUSer(@PathVariable UUID id, @Valid @RequestBody DeleteUserDto user) {
+    public ResponseEntity<Void> deleteUSer(@PathVariable UUID id, @Valid @RequestBody DeleteUserRequest user) {
         userService.deleteUser(id, user);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

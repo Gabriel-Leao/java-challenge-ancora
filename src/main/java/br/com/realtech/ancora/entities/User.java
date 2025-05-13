@@ -1,12 +1,10 @@
 package br.com.realtech.ancora.entities;
 
-import br.com.realtech.ancora.dtos.user.CreateUserRequestDto;
-import br.com.realtech.ancora.models.Role;
+import br.com.realtech.ancora.dtos.user.request.UpsertUserRequest;
+import br.com.realtech.ancora.models.UserRole;
 import br.com.realtech.ancora.utils.DateFormatterUtil;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +12,9 @@ import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "users")
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -35,7 +35,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private UserRole role;
 
     @Column(name = "birthdate", nullable = false)
     private LocalDate birthDate;
@@ -46,7 +46,7 @@ public class User {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    public User(CreateUserRequestDto createUserDto) {
+    public User(UpsertUserRequest createUserDto) {
         this.name = createUserDto.getName();
         this.email = createUserDto.getEmail();
         this.password = createUserDto.getPassword();
@@ -65,11 +65,19 @@ public class User {
         updatedAt = LocalDateTime.now();
     }
 
+    public UserRole convertStringToRole(String role) {
+        return role != null ? UserRole.valueOf(role.toUpperCase()) : UserRole.USER;
+    }
+
+    public LocalDate convertStringToBirthdate(String birthdate) {
+        return DateFormatterUtil.transformStringToLocalDate(birthdate);
+    }
+
     public void setRole(String role) {
-        this.role = role != null ? Role.valueOf(role.toUpperCase()) : Role.USER;
+        this.role = convertStringToRole(role);
     }
 
     public void setBirthDate(String birthDate) {
-        this.birthDate = DateFormatterUtil.transformStringToLocalDate(birthDate);
+        this.birthDate = convertStringToBirthdate(birthDate);
     }
 }
