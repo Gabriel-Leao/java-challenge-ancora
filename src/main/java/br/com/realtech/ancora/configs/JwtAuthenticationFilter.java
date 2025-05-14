@@ -15,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -83,17 +84,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private boolean checkIfEndpointIsNotPublic(HttpServletRequest request) {
         String method = request.getMethod();
         String path = request.getRequestURI();
+        AntPathMatcher pathMatcher = new AntPathMatcher();
 
         boolean isWhitelisted = Arrays.stream(SecurityConfig.PATH_WHITELIST)
-                .anyMatch(whitelistPath -> path.matches(convertToRegex(whitelistPath)));
+                .anyMatch(whitelistPath -> pathMatcher.match(whitelistPath, path));
 
         boolean isUserCreation = method.equals("POST") && path.equals("/users");
 
         return !(isWhitelisted || isUserCreation);
     }
-
-    private String convertToRegex(String path) {
-        return path.replace("**", ".*");
-    }
-
 }

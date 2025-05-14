@@ -30,7 +30,7 @@ Ancora é um projeto de backend desenvolvido em Java com o framework Spring Boot
 A documentação interativa da API está disponível através do SpringDoc OpenAPI (Swagger UI). Para acessar:
 
 1. Execute a aplicação
-2. Acesse: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+2. Acesse: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui.html)
 
 ## Banco de Dados H2
 
