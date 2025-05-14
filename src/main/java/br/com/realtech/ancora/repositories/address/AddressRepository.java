@@ -13,8 +13,6 @@ import java.util.UUID;
 public interface AddressRepository extends JpaRepository<Address, Long> {
     Optional<Address> findByUserId(UUID userId);
 
-    Optional<Address> findByPostalCode(String postalCode);
-
     @Modifying
     @Query("DELETE FROM Address a WHERE a.user.id = :userId")
     void deleteByUserId(UUID userId);
