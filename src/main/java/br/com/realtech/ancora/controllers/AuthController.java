@@ -2,7 +2,7 @@ package br.com.realtech.ancora.controllers;
 
 import br.com.realtech.ancora.dtos.auth.request.LoginRequest;
 import br.com.realtech.ancora.dtos.auth.response.LoginResponse;
-import br.com.realtech.ancora.services.AuthService;
+import br.com.realtech.ancora.services.auth.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

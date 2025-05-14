@@ -2,7 +2,7 @@ package br.com.realtech.ancora.configs;
 
 import br.com.realtech.ancora.entities.User;
 import br.com.realtech.ancora.models.UserDetailsImpl;
-import br.com.realtech.ancora.repositories.UserRepository;
+import br.com.realtech.ancora.repositories.user.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

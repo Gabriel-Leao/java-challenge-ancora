@@ -46,6 +46,10 @@ public class User {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
     public User(UpsertUserRequest createUserDto) {
         this.name = createUserDto.getName();
         this.email = createUserDto.getEmail();
@@ -79,5 +83,17 @@ public class User {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = convertStringToBirthdate(birthDate);
+    }
+
+    public void setAddress(Address address) {
+        if (this.address != null) {
+            this.address.setUser(null);
+        }
+
+        this.address = address;
+
+        if (address != null) {
+            address.setUser(this);
+        }
     }
 }

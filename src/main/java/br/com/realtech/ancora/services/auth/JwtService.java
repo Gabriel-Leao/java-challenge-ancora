@@ -1,4 +1,4 @@
-package br.com.realtech.ancora.services;
+package br.com.realtech.ancora.services.auth;
 
 import br.com.realtech.ancora.entities.User;
 import br.com.realtech.ancora.models.UserDetailsImpl;

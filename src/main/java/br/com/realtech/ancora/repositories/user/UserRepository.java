@@ -1,4 +1,4 @@
-package br.com.realtech.ancora.repositories;
+package br.com.realtech.ancora.repositories.user;
 
 import br.com.realtech.ancora.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package br.com.realtech.ancora.services;
+package br.com.realtech.ancora.services.user;
 
 import br.com.realtech.ancora.dtos.user.request.DeleteUserRequest;
 import br.com.realtech.ancora.dtos.user.request.PartialUpdateUserRequest;
@@ -9,7 +9,8 @@ import br.com.realtech.ancora.entities.User;
 import br.com.realtech.ancora.exceptions.ConflictException;
 import br.com.realtech.ancora.exceptions.NotFoundException;
 import br.com.realtech.ancora.exceptions.UnauthorizedException;
-import br.com.realtech.ancora.repositories.UserRepository;
+import br.com.realtech.ancora.repositories.user.UserRepository;
+import br.com.realtech.ancora.services.auth.JwtService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

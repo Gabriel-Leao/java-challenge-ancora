@@ -1,4 +1,4 @@
-package br.com.realtech.ancora.services;
+package br.com.realtech.ancora.services.auth;
 
 import br.com.realtech.ancora.dtos.auth.request.LoginRequest;
 import br.com.realtech.ancora.dtos.auth.response.LoginResponse;

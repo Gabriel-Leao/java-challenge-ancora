@@ -5,7 +5,7 @@ import br.com.realtech.ancora.dtos.user.request.PartialUpdateUserRequest;
 import br.com.realtech.ancora.dtos.user.request.UpsertUserRequest;
 import br.com.realtech.ancora.dtos.user.response.CreateUserResponse;
 import br.com.realtech.ancora.dtos.user.response.UserResponse;
-import br.com.realtech.ancora.services.UserService;
+import br.com.realtech.ancora.services.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
